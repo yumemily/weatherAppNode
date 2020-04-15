@@ -4,4 +4,5 @@
 * Calling API in back-end server and rendering the API forecast data on the front-end with handlebars
 
 ![weatherapppng](/weatherappnode.png)
+![weatherapppng2](/weatherappnode2.png)
 ![weatherappgif](/weatherappexpress.gif)
