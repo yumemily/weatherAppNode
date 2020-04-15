@@ -3,6 +3,8 @@
 * Forecast data fetched from Darksky.net and geo coords from Mapbox
 * Calling API in back-end server and rendering the API forecast data on the front-end with handlebars
 
+[Live Demo](https://em-weatherapp-nodejs.herokuapp.com/)
+
 ![weatherapppng](/weatherappnode.png)
 ![weatherapppng2](/weatherappnode2.png)
 ![weatherappgif](/weatherappexpress.gif)
