@@ -13,19 +13,18 @@ const moment = require('moment');
  * Then I used the each helper to iterate over the array and displayed the data
 */
 
-function getWeather(res, city, lng, lat) {
+function getWeather(res, city=null, lng, lat, template) {
 
     //Get timestamp in seconds for the API time request parameter
     var now = Math.floor(Date.now() / 1000)
-    console.log(now)
 
+    console.log(lng,lat)
     const url = `https://api.darksky.net/forecast/${process.env.DARK_SKY}/${lat},${lng},${now}`
     request({ url: url, json: true }, (error, { body }) => { //2 elements: url+json:true and callbackfunction w 2 args network error and body
         if (error) {
             console.log(error) //log error from api to terminal
-            return res.render('weather', { error: 'There is a problem with fetching your location' }) //let user know there was an error, pass error to weather template
+            return res.render(template.hbs, { error: 'There is a problem with fetching your location' }) //let user know there was an error, pass error to weather template
         }
-
         daily = body.daily;
         data = daily.data[0]; // NTS: data is an array
         low = data.temperatureLow 
@@ -33,6 +32,7 @@ function getWeather(res, city, lng, lat) {
         hourly = body.hourly.data
 
         //get array of times and temperatures
+        // we can actually just send the unix timestamp to view. And the client browser will have to stringify unix timestamp to string. (it's a bit more complicated, but you can read the docs in handlebars. you can define functions and pass it to hbs .. magic)
         function getTimes() {
             a = [];
             for (i = 0; i < hourly.length; i++) {
@@ -45,10 +45,15 @@ function getWeather(res, city, lng, lat) {
         }
         
         times = getTimes();
-
         //render the /weather page with data from the object in the second argument
-        return res.render('weather', {
-            ...body['currently'], data: data, city: city, hourly: hourly, times: times //note to self: data is the dailydata
+        return res.render(template.hbs, {
+            ...body['currently'], 
+            title: template.title,
+            data: data, 
+            city: city, 
+            hourly: hourly, 
+            times: times 
+            //note to self: data is the dailydata
         })
     })
 }

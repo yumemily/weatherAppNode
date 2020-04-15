@@ -1,21 +1,28 @@
-
 <div class='container text-center mt-5'>
+    {{!-- gotta change the logic in index.hbs abit if you want to implement current location weather, but im lazy --}}
+    {{#if title}}
+    <h1>{{title}}</h1>
+    <p>Welcome to {{title}}!</p>
 
-{{#if title}}
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}!</p>
-<p>Search a city to get its current weather report.</p>
-<p>Example: Los Angeles, CA</p>
-{{! Action means go to that route }}
-<form action='/weather' method='GET'>
-    <input name='city' placeholder='Search your city'/>
-    <button type='submit'>GET WEATHER</button>
-</form>
-{{/if}}
+    {{#if data}}
+    <h1> Weather at your city</h1>
+    <p>Current temperature: {{temperature}}</p>
+    {{/if}}
 
-{{#if error}}
-<h2>{{error}}</h2>
-{{/if}}
+
+    <p>Search a city to get its current weather report.</p>
+    <p>Example: Los Angeles, CA</p>
+    {{! Action means go to that route }}
+    <form action='/weather' method='GET'>
+        <input name='city' placeholder='Search your city' />
+        <button type='submit'>GET WEATHER</button>
+    </form>
+    {{/if}}
+
+    {{#if error}}
+    <h2>{{error}}</h2>
+    {{/if}}
+
+  <script src="/javascripts/myscript.js" type="text/javascript"></script>
 
 </div>
-
