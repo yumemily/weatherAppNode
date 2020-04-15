@@ -10,7 +10,7 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
-//I don't need this helper anymore.
+//I don't need this helper anymore. /// YES
 //https://stackoverflow.com/questions/43706406/handlebars-does-not-recognize-helper
 hbs.registerHelper('if_eq', function(a, b, opts) {
   if(a == b)
@@ -27,10 +27,10 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));  // telling express that our statics folder is public
 
-app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

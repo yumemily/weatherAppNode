@@ -8,15 +8,15 @@ const getWeather = require('../utils/getWeather')
 // * How to manage routes
 // * Chain functions
 // * Error handling
-
-router.get('/weather', function (req,res){
+// localhost:5000/users/
+router.get('/weather', function (req, res) {
   const query = req.query;
   console.log(query)
   //use the city name to get geo coords
-  if(!query.city){
+  if (!query.city) {
     return res.redirect('/')
   }
-  getCoords(res, query.city, getWeather);
+  getCoords(res, query.city, getWeather, {hbs: "weather"});
 
 
   //chain 2 functions w a callback getCoords triggers the callback fx getWeather
@@ -27,11 +27,16 @@ router.get('/weather', function (req,res){
 })
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: "Em's Weather App" });
+router.get('/', function (req, res, next) {
+  const { lng, lat } = req.query
+  if (lng && lat) {
+    return getWeather(res, null, lng, lat, { hbs: "index", title: "Em's Weather App" }) // this is so bad, passsing too many things . Normally you want to pass title for every hbs page. If you look at real website, the title change depends on each route's content.
+  } else {
+    res.render('index', { title: "Em's Weather App" });
+  }
 });
 
-router.get('*', function(req, res, next) {
+router.get('*', function (req, res, next) {
   res.render('index', { error: '404 not found' });
 });
 
